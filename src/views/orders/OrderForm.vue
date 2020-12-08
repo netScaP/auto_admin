@@ -33,6 +33,13 @@
 
         <el-form-item prop="title" label="Название">
           <el-input v-model="form.title" :disabled="true" />
+          <div v-if="form.car.photos" style="display: flex; justify-content: center; width: 150px;">
+            <el-image
+              :src="form.car.photos[0].path"
+              :preview-src-list="form.car.photos.map(e => e.path)"
+              style="height: 100%;"
+            />
+          </div>
         </el-form-item>
 
         <el-form-item label="">

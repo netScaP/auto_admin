@@ -5,14 +5,14 @@ export default {
         await this.$confirm(text, 'Предупреждение', {
           confirmButtonText: 'Да',
           cancelButtonText: 'Нет',
-          type: 'warning'
+          type: 'warning',
         })
       } catch (err) {
         this.$message({
-          message: onCancelText
+          message: onCancelText,
         })
         throw new Error(err)
       }
-    }
-  }
+    },
+  },
 }

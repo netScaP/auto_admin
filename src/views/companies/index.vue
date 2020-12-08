@@ -1,22 +1,17 @@
 <template>
   <div class="app-container">
-    <div class="top-menu el-col el-col-24 el-col-xs-24 el-col-sm-24 el-col-md-24 tp-text--right mb-4">
+    <div
+      class="top-menu el-col el-col-24 el-col-xs-24 el-col-sm-24 el-col-md-24 tp-text--right mb-4"
+    >
       <div class="filters">
-        <el-input
-          v-model="filters.$search"
-          placeholder="Название"
-        />
+        <el-input v-model="filters.$search" placeholder="Название" />
         <el-button @click="onFilterClick">
           Применить
         </el-button>
       </div>
       <div class="add-button">
-        <router-link 
-          :to="{ name: 'addCompany' }">
-          <el-button
-            type="success"
-            icon="el-icon-plus"
-            circle />
+        <router-link :to="{ name: 'addCompany' }">
+          <el-button type="success" icon="el-icon-plus" circle />
         </router-link>
       </div>
     </div>
@@ -26,60 +21,46 @@
       element-loading-text="Loading"
       border
       fit
-      highlight-current-row>
-      <el-table-column 
-        align="center" 
-        label="ID" 
-        width="95">
+      highlight-current-row
+    >
+      <el-table-column align="center" label="ID" width="95">
         <template slot-scope="scope">
           {{ scope.row.id }}
         </template>
       </el-table-column>
-      <el-table-column 
-        align="center" 
-        label="Название">
+      <el-table-column align="center" label="Название">
         <template slot-scope="scope">
           {{ scope.row.name }}
         </template>
       </el-table-column>
-      <el-table-column 
-        align="center" 
-        label="Телефон" 
-        width="200">
+      <el-table-column align="center" label="Телефон" width="200">
         <template slot-scope="scope">
           {{ scope.row.phone }}
         </template>
       </el-table-column>
-      <el-table-column 
-        align="center" 
-        label="Email" 
-        width="200">
+      <el-table-column align="center" label="Email" width="200">
         <template slot-scope="scope">
           {{ scope.row.email }}
         </template>
       </el-table-column>
-      <el-table-column 
-        align="center" 
-        label="Статус" 
-        width="150">
+      <el-table-column align="center" label="Статус" width="150">
         <template slot-scope="scope">
           {{ statuses[scope.row.status] }}
         </template>
       </el-table-column>
-      <el-table-column
-        align="center" 
-        fixed="right"
-        label="Действия"
-        width="200">
+      <el-table-column align="center" fixed="right" label="Действия" width="200">
         <template slot-scope="scope">
           <div class="el-button-group">
-            <router-link 
-              :to="{ name: 'editCompany', params: { id: scope.row.id }}" 
-              tag="button" 
-              class="el-button el-button--default el-button--small" ><i class="el-icon-edit"/></router-link>
-            <el-button 
-              size="small" 
-              @click="handleDelete(scope.row.id)"><i class="el-icon-delete"/></el-button>
+            <router-link
+              :to="{ name: 'editCompany', params: { id: scope.row.id } }"
+              tag="button"
+              class="el-button el-button--default el-button--small"
+            >
+              <i class="el-icon-edit" />
+            </router-link>
+            <el-button size="small" @click="handleDelete(scope.row.id)">
+              <i class="el-icon-delete" />
+            </el-button>
           </div>
         </template>
       </el-table-column>
@@ -92,7 +73,8 @@
       background
       layout="sizes, prev, pager, next, total"
       @size-change="handleSizeChange"
-      @current-change="fetchData"/>
+      @current-change="fetchData"
+    />
   </div>
 </template>
 

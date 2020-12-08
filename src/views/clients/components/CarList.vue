@@ -26,12 +26,25 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="ID" width="95">
+      <el-table-column align="center" label="ID" width="75">
         <template slot-scope="scope">
           {{ scope.row.id }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Название">
+      <el-table-column align="center" label="Фото" width="150">
+        <template slot-scope="scope">
+          <el-image
+            :src="scope.row.photos[0].path"
+            :preview-src-list="scope.row.photos.map(e => e.path)"
+            style="height: 100%;"
+          />
+          <!-- <el-carousel v-if="scope.row.photos" height="150px">
+            <el-carousel-item v-for="item in scope.row.photos" :key="item.id">
+            </el-carousel-item>
+          </el-carousel> -->
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="Название" min-width="100">
         <template slot-scope="scope">
           {{ scope.row.title }}
         </template>

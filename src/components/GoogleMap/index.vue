@@ -2,28 +2,21 @@
   <div>
     <div>
       <label>
-        <gmap-autocomplete
-          class="input-gmap"
-          @place_changed="setPlace"/>
-        <el-button
-          type="primary"
-          @click.prevent="addMarker">
+        <gmap-autocomplete class="input-gmap" @place_changed="setPlace" />
+        <el-button type="primary" @click.prevent="addMarker">
           Найти
         </el-button>
       </label>
     </div>
-    <br>
-    <gmap-map
-      :center="center"
-      :zoom="12"
-      style="width:100%;  height: 400px;"
-    >
+    <br />
+    <gmap-map :center="center" :zoom="12" style="width:100%;  height: 400px;">
       <gmap-marker
         :position="marker.position"
         :clickable="true"
         :draggable="true"
         @drag="updateCoordinates"
-        @click="center = center.position"/>
+        @click="center = center.position"
+      />
     </gmap-map>
   </div>
 </template>
@@ -35,8 +28,8 @@ export default {
   props: {
     coordinates: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
 
   data() {
@@ -45,16 +38,16 @@ export default {
       // change this to whatever makes sense
       center: this.coordinates,
       marker: {
-        position: this.coordinates
+        position: this.coordinates,
       },
-      currentPlace: null
+      currentPlace: null,
     }
   },
 
   watch: {
     coordinates() {
       this.geolocate()
-    }
+    },
   },
 
   mounted() {
@@ -69,7 +62,7 @@ export default {
     addMarker() {
       const marker = {
         lat: this.currentPlace.geometry.location.lat(),
-        lng: this.currentPlace.geometry.location.lng()
+        lng: this.currentPlace.geometry.location.lng(),
       }
       this.marker.position = marker
       this.center = marker
@@ -80,7 +73,7 @@ export default {
     updateCoordinates(location) {
       this.marker.position = {
         lat: location.latLng.lat(),
-        lng: location.latLng.lng()
+        lng: location.latLng.lng(),
       }
 
       this.$emit('coordinates_changed', this.marker.position)
@@ -94,11 +87,11 @@ export default {
       navigator.geolocation.getCurrentPosition(position => {
         this.center = {
           lat: position.coords.latitude,
-          lng: position.coords.longitude
+          lng: position.coords.longitude,
         }
       })
-    }
-  }
+    },
+  },
 }
 </script>
 

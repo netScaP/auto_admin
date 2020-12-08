@@ -5,6 +5,17 @@
     >
       <div class="filters">
         <el-input v-model="filters.$search" placeholder="Название" />
+
+        <CarSelect :query="filters.car" @updated="val => (filters.car = val)" />
+
+        <el-select v-model="filters.type" :clearable="true" placeholder="Тип заявки">
+          <el-option v-for="(value, key) in types" :key="key" :label="value" :value="key" />
+        </el-select>
+
+        <el-select v-model="filters.status" :clearable="true" placeholder="Статус заявки">
+          <el-option v-for="(value, key) in statuses" :key="key" :label="value" :value="key" />
+        </el-select>
+
         <el-button @click="onFilterClick">
           Применить
         </el-button>
@@ -15,6 +26,7 @@
     <el-table
       v-loading="isLoading"
       :data="orders"
+      :row-class-name="tableRowClassName"
       element-loading-text="Loading"
       border
       fit
@@ -98,11 +110,14 @@
 import VueStarRating from 'vue-star-rating'
 import moment from 'moment'
 
+import CarSelect from '../../components/CarSelect'
+
 export default {
   name: 'Orders',
 
   components: {
     VueStarRating,
+    CarSelect,
   },
 
   filters: {
@@ -114,7 +129,9 @@ export default {
   data() {
     return {
       orders: [],
-      filters: {},
+      filters: {
+        car: {},
+      },
       statuses: {
         unhandled: 'В обработке',
         closed: 'Закрыт',
@@ -136,6 +153,10 @@ export default {
 
   mounted() {
     this.fetchData()
+
+    this.$apiClient.service('orders').on('created', order => {
+      this.orders.unshift(order)
+    })
   },
 
   methods: {
@@ -150,7 +171,19 @@ export default {
         $sort: {
           createdAt: -1,
         },
+        car: this.filters.car,
       }
+      console.log(query.car)
+
+      Object.keys(this.filters).forEach(key => {
+        if (key === 'car') {
+          return false
+        }
+
+        if (this.filters[key]) {
+          query[key] = this.filters[key]
+        }
+      })
 
       const response = await ordersService.find({
         query,
@@ -182,6 +215,13 @@ export default {
 
     viewOrder(data) {
       this.activeOrder = data
+    },
+
+    tableRowClassName({ row }) {
+      if (moment().diff(moment(row.createdAt), 'minutes') < 5) {
+        return 'new-row'
+      }
+      return ''
     },
   },
 }

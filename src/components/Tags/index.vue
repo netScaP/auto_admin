@@ -1,26 +1,28 @@
 <template>
-<div>
-  <el-tag
-    :key="tag"
-    v-for="tag in tags"
-    closable
-    :disable-transitions="false"
-    @close="handleClose(tag)">
-    {{tag}}
-  </el-tag>
-  <v-select
-    :value="tag"
-    label="name"
-    :options="searchedTags"
-    :fetchData="fetchTags"
-    :taggable="true"
-    :clearable="true"
-    :multiply="false"
-    :infinite-loading="false"
-    placeholder="Тег"
-    @search="resetTags"
-    @input="addTag" />
-</div>
+  <div>
+    <el-tag
+      :key="tag"
+      v-for="tag in tags"
+      closable
+      :disable-transitions="false"
+      @close="handleClose(tag)"
+    >
+      {{ tag }}
+    </el-tag>
+    <v-select
+      :value="tag"
+      label="name"
+      :options="searchedTags"
+      :fetchData="fetchTags"
+      :taggable="true"
+      :clearable="true"
+      :multiply="false"
+      :infinite-loading="false"
+      placeholder="Тег"
+      @search="resetTags"
+      @input="addTag"
+    />
+  </div>
 </template>
 
 <script>
@@ -86,5 +88,4 @@ export default {
 }
 </script>
 
-<style>
-</style>
+<style></style>

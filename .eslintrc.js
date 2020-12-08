@@ -15,6 +15,7 @@ module.exports = {
     'switch-colon-spacing': ['error', { after: true, before: false }],
     'vue/max-attributes-per-line': false,
     'vue/html-self-closing': false,
+    'no-unused-vars': 1,
   },
   parserOptions: {
     parser: 'babel-eslint',

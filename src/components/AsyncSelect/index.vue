@@ -5,13 +5,15 @@
     :label="label"
     :reduce="reduce"
     :options="addresses"
-    :fetchData="fetchAddresses"
+    :fetch-data="fetchAddresses"
     :taggable="taggable"
-    :clearable="false"
+    :clearable="clearable"
+    :disabled="disabled"
     :infinite-loading="false"
     :placeholder="placeholder"
     @search="resetAddresses"
-    @input="addressChanged" />
+    @input="addressChanged"
+  />
 </template>
 
 <script>
@@ -47,6 +49,18 @@ export default {
       type: Function,
       default: val => val.id,
     },
+    baseQuery: {
+      type: Object,
+      default: () => ({}),
+    },
+    clearable: {
+      type: Boolean,
+      default: false,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   data() {
@@ -65,11 +79,18 @@ export default {
       deep: true,
       immediate: true,
     },
+    baseQuery: {
+      handler() {
+        this.fetchAddresses()
+      },
+      deep: true,
+    },
   },
 
   methods: {
     async fetchAddresses() {
       const query = {
+        ...this.baseQuery,
         $limit: -1,
       }
       if (this.addressSearch) {
@@ -99,5 +120,4 @@ export default {
 }
 </script>
 
-<style>
-</style>
+<style></style>

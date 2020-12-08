@@ -1,7 +1,5 @@
 <template>
-  <div
-    :class="className"
-    :style="{height:height,width:width}"/>
+  <div :class="className" :style="{ height: height, width: width }" />
 </template>
 
 <script>
@@ -41,8 +39,10 @@ export default {
   watch: {
     chartData: {
       deep: true,
-      handler(val) {
-        this.setOptions(val.quantities, val.dates)
+      handler() {
+        this.chart.clear()
+        // this.setOptions(val.quantities, val.dates)
+        this.initChart()
       },
     },
   },
@@ -81,9 +81,21 @@ export default {
         this.__resizeHandler()
       }
     },
-    setOptions({ company, point } = {}, dates) {
-      if (!company) {
-        return false
+    setOptions(quantities, dates) {
+      const keys = Object.keys(quantities)
+
+      const colors = {
+        'Новые заявки': '#409EFF',
+        'Ответы сервисов': '#67C23A',
+        Детейлинг: '#E6A23C',
+        Ремонт: '#F56C6C',
+        Запчасти: '#9A76B3',
+        'Новые клиенты': '#DC3790',
+        Активна: '#b6a2de',
+        'Не обработана': '#5cc7c9',
+        Закрыта: '#01142F',
+        'В работе': '#B7D4FF',
+        Обработана: '#00848C',
       }
 
       this.chart.setOption({
@@ -114,28 +126,30 @@ export default {
           },
         },
         legend: {
-          data: [company.name],
+          data: keys,
         },
-        series: [
-          {
-            name: company.name,
-            itemStyle: {
-              normal: {
-                color: '#FF005A',
-                lineStyle: {
-                  color: '#FF005A',
-                  width: 2,
-                },
+        series: keys.map((key, i) => ({
+          name: key,
+          itemStyle: {
+            normal: {
+              color: colors[key] ? colors[key] : '#4D8802',
+              lineStyle: {
+                color: colors[key] ? colors[key] : '#4D8802',
+                width: 3,
               },
             },
-            smooth: true,
-            type: 'line',
-            data: company.data,
-            animationDuration: 2800,
-            animationEasing: 'cubicInOut',
           },
-        ],
+          smooth: true,
+          type: 'line',
+          symbol: 'circle',
+          symbolSize: 7,
+          data: quantities[key].data,
+          animationDuration: 1800,
+          animationEasing: 'cubicInOut',
+        })),
       })
+
+      this.chart.resize()
     },
     initChart() {
       this.chart = echarts.init(this.$el, 'macarons')

@@ -1,6 +1,6 @@
 import moment from 'moment'
 
-export const toDateFormat = (val) => {
+export const toDateFormat = val => {
   if (!moment(val).isValid()) {
     return val
   }

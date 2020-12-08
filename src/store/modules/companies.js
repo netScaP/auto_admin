@@ -39,7 +39,7 @@ const companies = {
   },
 
   actions: {
-    setCompanyId({ commit, dispatch }, payload) {
+    setCompanyId({ commit }, payload) {
       commit('SET_COMPANY_ID', payload)
     },
 

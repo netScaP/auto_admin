@@ -1,18 +1,16 @@
 <template>
-  <el-breadcrumb 
-    class="app-breadcrumb" 
-    separator="/">
+  <el-breadcrumb class="app-breadcrumb" separator="/">
     <transition-group name="breadcrumb">
-      <el-breadcrumb-item 
-        v-for="(item,index) in levelList" 
-        v-if="item.meta.title" 
-        :key="index">
-        <span 
-          v-if="item.redirect==='noredirect'||index==levelList.length-1" 
-          class="no-redirect">{{ item.meta.title }}</span>
-        <a 
-          v-else 
-          @click.prevent="handleLink(item)">{{ item.meta.title }}</a>
+      <el-breadcrumb-item v-for="(item, index) in levelList" :key="index">
+        <template v-if="item && item.meta && item.meta.title">
+          <span
+            v-if="item.redirect === 'noredirect' || index == levelList.length - 1"
+            class="no-redirect"
+          >
+            {{ item.meta.title }}
+          </span>
+          <a v-else @click.prevent="handleLink(item)">{{ item.meta.title }}</a>
+        </template>
       </el-breadcrumb-item>
     </transition-group>
   </el-breadcrumb>
@@ -24,13 +22,13 @@ import pathToRegexp from 'path-to-regexp'
 export default {
   data() {
     return {
-      levelList: null
+      levelList: null,
     }
   },
   watch: {
     $route() {
       this.getBreadcrumb()
-    }
+    },
   },
   created() {
     this.getBreadcrumb()
@@ -44,7 +42,7 @@ export default {
       })
       const first = matched[0]
       if (first && first.name !== 'dashboard') {
-        matched = [{ path: '/dashboard', meta: { title: 'Dashboard' }}].concat(matched)
+        matched = [{ path: '/dashboard', meta: { title: 'Dashboard' } }].concat(matched)
       }
       this.levelList = matched
     },
@@ -61,20 +59,20 @@ export default {
         return
       }
       this.$router.push(this.pathCompile(path))
-    }
-  }
+    },
+  },
 }
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-  .app-breadcrumb.el-breadcrumb {
-    display: inline-block;
-    font-size: 14px;
-    line-height: 50px;
-    margin-left: 10px;
-    .no-redirect {
-      color: #97a8be;
-      cursor: text;
-    }
+.app-breadcrumb.el-breadcrumb {
+  display: inline-block;
+  font-size: 14px;
+  line-height: 50px;
+  margin-left: 10px;
+  .no-redirect {
+    color: #97a8be;
+    cursor: text;
   }
+}
 </style>

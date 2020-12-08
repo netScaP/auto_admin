@@ -7,7 +7,7 @@ export const host = process.env.BASE_API || 'http://localhost:3030'
 
 const socket = io(host, {
   transports: ['polling'],
-  path: process.env.SOCKET_PATH || '/socket.io'
+  path: process.env.SOCKET_PATH || '/socket.io',
 })
 
 const feathersClient = feathers()

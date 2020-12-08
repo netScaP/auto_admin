@@ -4,16 +4,17 @@
       class="top-menu el-col el-col-24 el-col-xs-24 el-col-sm-24 el-col-md-24 tp-text--right mb-4"
     >
       <div class="filters">
-        <el-input v-mask="'+7 (###) ### ##-##'" v-model="filters.$search" placeholder="Название" />
+        <el-input
+          v-mask="'+7 (###) ### ##-##'"
+          v-model="filters.$phone"
+          placeholder="Номер телефона"
+        />
+        <el-input v-model="filters.$search" placeholder="Поиск" />
         <el-button @click="onFilterClick">
           Применить
         </el-button>
       </div>
-      <div class="add-button">
-        <router-link :to="{ name: 'addClient' }">
-          <el-button type="success" icon="el-icon-plus" circle />
-        </router-link>
-      </div>
+      <div class="add-button" />
     </div>
     <el-table
       v-loading="isLoading"

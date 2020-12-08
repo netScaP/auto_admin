@@ -147,6 +147,26 @@ export const constantRouterMap = [
   },
 
   {
+    path: '/auto-configs',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'AutoConfigs',
+        component: () => import('@/views/auto-configs/index'),
+        meta: {
+          title: 'Конфигурация',
+          icon: 'orders',
+          roles: ['admin', 'company'],
+        },
+      },
+    ],
+    meta: {
+      availableRoles: ['admin', 'company'],
+    },
+  },
+
+  {
     path: '/users/',
     component: Layout,
     children: [

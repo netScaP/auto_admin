@@ -9,7 +9,8 @@
     field="file"
     img-format="png"
     @crop-success="handleImageDataUrl"
-    @crop-upload-success="handleAvatarSuccess"/>
+    @crop-upload-success="handleAvatarSuccess"
+  />
 </template>
 
 <script>
@@ -20,38 +21,38 @@ export default {
   name: 'CropUpload',
 
   components: {
-    cropUpload
+    cropUpload,
   },
 
   props: {
     show: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
 
   data() {
     return {
       fileUrl: `${process.env.FILE_URL}/files/`,
-      componentShow: false
+      componentShow: false,
     }
   },
 
   computed: {
     ...mapGetters({
-      token: 'user/token'
+      token: 'user/token',
     }),
     headerInfo() {
       return {
-        'Authorization': `Bearer ${this.token}`
+        Authorization: `Bearer ${this.token}`,
       }
-    }
+    },
   },
 
   watch: {
     show() {
       this.componentShow = this.show
-    }
+    },
   },
 
   methods: {
@@ -61,8 +62,7 @@ export default {
 
     handleAvatarSuccess(response) {
       this.$emit('image-loaded', response)
-    }
-  }
-  
+    },
+  },
 }
 </script>
