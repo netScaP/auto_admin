@@ -5,9 +5,6 @@
 ## Build Setup
 
 ```bash
-# Clone project
-git clone git@bitbucket.org:ivanuch90/cic_web_panel.git
-
 # Install dependencies
 npm install
 
